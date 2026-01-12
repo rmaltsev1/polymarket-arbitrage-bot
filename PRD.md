@@ -563,8 +563,8 @@ client.update_balance_allowance()
 ## File Structure
 
 ```
-karb/
-├── src/karb/
+rarb/
+├── src/rarb/
 │   ├── __init__.py
 │   ├── bot.py                  # Main bot entry point
 │   ├── config.py               # Configuration loading

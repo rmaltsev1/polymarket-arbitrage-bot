@@ -6,7 +6,7 @@ from eth_account import Account
 from eth_account.messages import encode_typed_data
 from eth_utils import keccak
 from poly_eip712_structs import make_domain, Address, EIP712Struct, Uint
-from karb.config import get_settings
+from rarb.config import get_settings
 
 settings = get_settings()
 private_key = settings.private_key.get_secret_value()

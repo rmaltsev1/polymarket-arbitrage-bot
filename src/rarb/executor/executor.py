@@ -11,21 +11,21 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Optional
 
-from karb.api.models import ArbitrageOpportunity
-from karb.config import get_settings
-from karb.data.repositories import ClosedPositionRepository, ExecutionRepository
-from karb.executor.async_clob import AsyncClobClient, create_async_clob_client
+from rarb.api.models import ArbitrageOpportunity
+from rarb.config import get_settings
+from rarb.data.repositories import ClosedPositionRepository, ExecutionRepository
+from rarb.executor.async_clob import AsyncClobClient, create_async_clob_client
 
 # Order monitoring settings
 ORDER_FILL_TIMEOUT_SECONDS = 10  # Max time to wait for order fills
 ORDER_CHECK_INTERVAL_SECONDS = 0.5  # How often to check order status
 
 # Shared state file for dashboard (kept for backward compatibility during transition)
-ORDERS_FILE = Path.home() / ".karb" / "orders.json"
-from karb.executor.signer import OrderSide, OrderSigner
-from karb.notifications.slack import get_notifier
-from karb.tracking.trades import Trade, TradeLog
-from karb.utils.logging import get_logger
+ORDERS_FILE = Path.home() / ".rarb" / "orders.json"
+from rarb.executor.signer import OrderSide, OrderSigner
+from rarb.notifications.slack import get_notifier
+from rarb.tracking.trades import Trade, TradeLog
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

@@ -1,4 +1,4 @@
-# Outputs for Karb infrastructure
+# Outputs for rarb infrastructure
 
 output "bot_public_ip" {
   description = "Public IP of the bot server (us-east-1)"
@@ -48,10 +48,10 @@ output "ansible_inventory" {
 
 output "dashboard_url" {
   description = "Dashboard URL"
-  value       = "https://karb.arkets.com"
+  value       = "https://rarb.arkets.com"
 }
 
 output "dns_record" {
   description = "DNS record created"
-  value       = "karb.arkets.com -> ${aws_instance.bot.public_ip}"
+  value       = "rarb.arkets.com -> ${aws_instance.bot.public_ip}"
 }

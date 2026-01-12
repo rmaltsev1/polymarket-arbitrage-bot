@@ -22,10 +22,10 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from karb.data.database import init_async_db, get_async_connection
+from rarb.data.database import init_async_db, get_async_connection
 
 
-DATA_DIR = Path.home() / ".karb"
+DATA_DIR = Path.home() / ".rarb"
 BACKUP_DIR = DATA_DIR / "backup_json"
 
 
@@ -268,7 +268,7 @@ def backup_files():
 async def main():
     """Run the migration."""
     print("=" * 60)
-    print("Karb Data Migration: JSON -> SQLite")
+    print("rarb Data Migration: JSON -> SQLite")
     print("=" * 60)
 
     if not DATA_DIR.exists():
@@ -279,7 +279,7 @@ async def main():
     # Initialize database
     print("\n1. Initializing SQLite database...")
     await init_async_db()
-    print(f"   Database: {DATA_DIR / 'karb.db'}")
+    print(f"   Database: {DATA_DIR / 'rarb.db'}")
 
     # Backup existing files
     print("\n2. Backing up existing JSON files...")
@@ -306,9 +306,9 @@ async def main():
     print("\n" + "=" * 60)
     print("Migration complete!")
     print("=" * 60)
-    print(f"\nDatabase created at: {DATA_DIR / 'karb.db'}")
+    print(f"\nDatabase created at: {DATA_DIR / 'rarb.db'}")
     print(f"Original files backed up to: {BACKUP_DIR}")
-    print("\nYou can now run karb with the new SQLite storage.")
+    print("\nYou can now run rarb with the new SQLite storage.")
 
 
 if __name__ == "__main__":

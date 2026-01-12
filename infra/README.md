@@ -1,6 +1,6 @@
-# Karb Infrastructure
+# rarb Infrastructure
 
-Infrastructure as code for deploying the Karb arbitrage bot.
+Infrastructure as code for deploying the rarb arbitrage bot.
 
 ## Architecture
 
@@ -11,7 +11,7 @@ Infrastructure as code for deploying the Karb arbitrage bot.
 │  │              Bot Server (t4g.small)                  │    │
 │  │  • Scanner: WebSocket to Polymarket                  │    │
 │  │  • Executor: Places orders via proxy                 │    │
-│  │  • Dashboard: karb.arkets.com:8080                   │    │
+│  │  • Dashboard: rarb.arkets.com:8080                   │    │
 │  └───────────────────────┬─────────────────────────────┘    │
 └──────────────────────────│──────────────────────────────────┘
                            │ SOCKS5 (port 1080)
@@ -61,8 +61,8 @@ cp group_vars/all.yml.example group_vars/all.yml
 
 # Update inventory with IPs from tofu output
 # Or set environment variables:
-export KARB_BOT_IP=$(cd ../opentofu && tofu output -raw bot_public_ip)
-export KARB_PROXY_IP=$(cd ../opentofu && tofu output -raw proxy_public_ip)
+export rarb_BOT_IP=$(cd ../opentofu && tofu output -raw bot_public_ip)
+export rarb_PROXY_IP=$(cd ../opentofu && tofu output -raw proxy_public_ip)
 ```
 
 ### 3. Deploy
@@ -80,13 +80,13 @@ ansible-playbook playbooks/bot.yml
 
 ```bash
 # Check bot status
-ssh ubuntu@$KARB_BOT_IP "sudo systemctl status karb-bot"
+ssh ubuntu@$rarb_BOT_IP "sudo systemctl status rarb-bot"
 
 # Check dashboard
-curl -u admin:password https://karb.arkets.com:8080/api/status
+curl -u admin:password https://rarb.arkets.com:8080/api/status
 
 # Check proxy
-ssh ubuntu@$KARB_PROXY_IP "sudo systemctl status danted"
+ssh ubuntu@$rarb_PROXY_IP "sudo systemctl status danted"
 ```
 
 ## Estimated Costs
@@ -101,10 +101,10 @@ ssh ubuntu@$KARB_PROXY_IP "sudo systemctl status danted"
 
 ```bash
 # View bot logs
-ssh ubuntu@$KARB_BOT_IP "sudo journalctl -u karb-bot -f"
+ssh ubuntu@$rarb_BOT_IP "sudo journalctl -u rarb-bot -f"
 
 # Restart bot
-ssh ubuntu@$KARB_BOT_IP "sudo systemctl restart karb-bot"
+ssh ubuntu@$rarb_BOT_IP "sudo systemctl restart rarb-bot"
 
 # Update code and redeploy
 ansible-playbook playbooks/bot.yml

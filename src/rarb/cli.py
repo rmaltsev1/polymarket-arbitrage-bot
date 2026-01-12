@@ -1,4 +1,4 @@
-"""Command-line interface for karb."""
+"""Command-line interface for rarb."""
 
 import asyncio
 import sys
@@ -8,9 +8,9 @@ import click
 from rich.console import Console
 from rich.table import Table
 
-from karb import __version__
-from karb.config import get_settings, reload_settings
-from karb.utils.logging import setup_logging
+from rarb import __version__
+from rarb.config import get_settings, reload_settings
+from rarb.utils.logging import setup_logging
 
 console = Console()
 
@@ -18,7 +18,7 @@ console = Console()
 @click.group()
 @click.version_option(version=__version__)
 def cli() -> None:
-    """Karb - Polymarket arbitrage bot."""
+    """rarb - Polymarket arbitrage bot."""
     pass
 
 
@@ -59,7 +59,7 @@ def run(
 
     mode = "[yellow]DRY RUN[/yellow]" if settings.dry_run else "[red]LIVE TRADING[/red]"
     engine = "[cyan]REAL-TIME WebSocket[/cyan]" if realtime else "[dim]Legacy Polling[/dim]"
-    console.print(f"\n[bold]Karb Arbitrage Bot[/bold] - {mode}")
+    console.print(f"\n[bold]rarb Arbitrage Bot[/bold] - {mode}")
     console.print(f"[bold]Engine:[/bold] {engine}\n")
 
     if not settings.dry_run:
@@ -80,10 +80,10 @@ def run(
 
     try:
         if realtime:
-            from karb.bot import run_realtime_bot
+            from rarb.bot import run_realtime_bot
             asyncio.run(run_realtime_bot())
         else:
-            from karb.bot import run_bot
+            from rarb.bot import run_bot
             asyncio.run(run_bot())
     except KeyboardInterrupt:
         console.print("\n[yellow]Interrupted[/yellow]")
@@ -95,8 +95,8 @@ def scan() -> None:
     setup_logging("INFO")
 
     async def _scan() -> None:
-        from karb.analyzer.arbitrage import ArbitrageAnalyzer
-        from karb.scanner.market_scanner import MarketScanner
+        from rarb.analyzer.arbitrage import ArbitrageAnalyzer
+        from rarb.scanner.market_scanner import MarketScanner
 
         console.print("[bold]Scanning markets...[/bold]\n")
 
@@ -143,7 +143,7 @@ def markets(limit: int) -> None:
     setup_logging("WARNING")
 
     async def _markets() -> None:
-        from karb.api.gamma import GammaClient
+        from rarb.api.gamma import GammaClient
 
         console.print("[bold]Fetching markets...[/bold]\n")
 
@@ -220,7 +220,7 @@ def orderbook(token_id: str) -> None:
     setup_logging("WARNING")
 
     async def _orderbook() -> None:
-        from karb.api.clob import ClobClient
+        from rarb.api.clob import ClobClient
 
         async with ClobClient() as client:
             ob = await client.get_orderbook(token_id)
@@ -296,7 +296,7 @@ def crossplatform(
     console.print()
 
     async def _run() -> None:
-        from karb.scanner.crossplatform_scanner import CrossPlatformScanner
+        from rarb.scanner.crossplatform_scanner import CrossPlatformScanner
 
         async with CrossPlatformScanner(
             poll_interval=poll_interval,
@@ -316,7 +316,7 @@ def kalshi_test() -> None:
     setup_logging("INFO")
 
     async def _test() -> None:
-        from karb.api.kalshi import KalshiClient
+        from rarb.api.kalshi import KalshiClient
 
         console.print("[bold]Testing Kalshi API connection...[/bold]\n")
 
@@ -365,7 +365,7 @@ def crossplatform_scan() -> None:
     setup_logging("INFO")
 
     async def _scan() -> None:
-        from karb.scanner.crossplatform_scanner import CrossPlatformScanner
+        from rarb.scanner.crossplatform_scanner import CrossPlatformScanner
 
         console.print("[bold]Running cross-platform scan...[/bold]\n")
 
@@ -416,14 +416,14 @@ def status() -> None:
     setup_logging("WARNING")
 
     async def _status() -> None:
-        from karb.tracking.portfolio import PortfolioTracker
-        from karb.tracking.trades import TradeLog
+        from rarb.tracking.portfolio import PortfolioTracker
+        from rarb.tracking.trades import TradeLog
 
         settings = get_settings()
         tracker = PortfolioTracker()
         trade_log = TradeLog()
 
-        console.print("\n[bold]Karb Bot Status[/bold]\n")
+        console.print("\n[bold]rarb Bot Status[/bold]\n")
 
         # Current balances
         console.print("[bold cyan]Balances[/bold cyan]")
@@ -442,7 +442,7 @@ def status() -> None:
         console.print(balance_table)
 
         # Record snapshot
-        from karb.tracking.portfolio import BalanceSnapshot
+        from rarb.tracking.portfolio import BalanceSnapshot
         snapshot = BalanceSnapshot(
             timestamp=balances["timestamp"],
             polymarket_usdc=balances["polymarket_usdc"],
@@ -510,7 +510,7 @@ def balance() -> None:
     setup_logging("WARNING")
 
     async def _balance() -> None:
-        from karb.tracking.portfolio import PortfolioTracker
+        from rarb.tracking.portfolio import PortfolioTracker
 
         tracker = PortfolioTracker()
         console.print("\n[bold]Fetching balances...[/bold]\n")
@@ -649,7 +649,7 @@ def approve_redemption() -> None:
 @click.option("--platform", type=click.Choice(["polymarket", "kalshi"]), help="Filter by platform")
 def trades(limit: int, platform: Optional[str]) -> None:
     """Show trade history."""
-    from karb.tracking.trades import TradeLog
+    from rarb.tracking.trades import TradeLog
 
     trade_log = TradeLog()
     recent = trade_log.get_trades(limit=limit, platform=platform)
@@ -695,8 +695,8 @@ def trades(limit: int, platform: Optional[str]) -> None:
 def pnl() -> None:
     """Show profit/loss summary."""
     from datetime import datetime, timedelta
-    from karb.tracking.portfolio import PortfolioTracker
-    from karb.tracking.trades import TradeLog
+    from rarb.tracking.portfolio import PortfolioTracker
+    from rarb.tracking.trades import TradeLog
 
     tracker = PortfolioTracker()
     trade_log = TradeLog()
@@ -728,7 +728,7 @@ def redeem() -> None:
     setup_logging("INFO")
 
     async def _redeem() -> None:
-        from karb.executor.redemption import get_redeemable_positions, redeem_all_positions
+        from rarb.executor.redemption import get_redeemable_positions, redeem_all_positions
 
         settings = get_settings()
 
@@ -795,7 +795,7 @@ def positions() -> None:
     setup_logging("WARNING")
 
     async def _positions() -> None:
-        from karb.executor.redemption import get_redeemable_positions
+        from rarb.executor.redemption import get_redeemable_positions
         import httpx
 
         settings = get_settings()
@@ -868,7 +868,7 @@ def positions() -> None:
 
             console.print(table)
             console.print(f"\n[bold]Total redeemable:[/bold] ${total_value:.2f}")
-            console.print("[dim]Run 'karb redeem' to claim these positions[/dim]")
+            console.print("[dim]Run 'rarb redeem' to claim these positions[/dim]")
 
     asyncio.run(_positions())
 
@@ -938,7 +938,7 @@ def backfill_balance(polygonscan_api_key: Optional[str], dry_run: bool) -> None:
                 daily_changes[date] -= amount  # outgoing
 
         # Calculate cumulative balance for each day
-        from karb.data.repositories import PortfolioRepository
+        from rarb.data.repositories import PortfolioRepository
 
         balance = 0.0
         inserted = 0
@@ -995,7 +995,7 @@ def dashboard(host: str, port: Optional[int]) -> None:
 
     actual_port = port or settings.dashboard_port
 
-    console.print(f"\n[bold]Starting Karb Dashboard[/bold]")
+    console.print(f"\n[bold]Starting rarb Dashboard[/bold]")
     console.print(f"[dim]URL:[/dim] http://{host}:{actual_port}")
     if settings.dashboard_password:
         console.print(f"[dim]Username:[/dim] {settings.dashboard_username}")
@@ -1004,7 +1004,7 @@ def dashboard(host: str, port: Optional[int]) -> None:
         console.print(f"[dim]Auth:[/dim] Disabled (no password configured)")
     console.print()
 
-    from karb.dashboard import run_dashboard
+    from rarb.dashboard import run_dashboard
     run_dashboard(host=host, port=actual_port)
 
 

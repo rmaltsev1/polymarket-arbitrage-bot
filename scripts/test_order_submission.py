@@ -3,7 +3,7 @@
 
 import asyncio
 import json
-from karb.executor.async_clob import create_async_clob_client
+from rarb.executor.async_clob import create_async_clob_client
 
 
 async def test_order():

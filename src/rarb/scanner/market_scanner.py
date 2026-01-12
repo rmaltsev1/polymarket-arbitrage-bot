@@ -5,11 +5,11 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Callable, Optional
 
-from karb.api.clob import ClobClient
-from karb.api.gamma import GammaClient
-from karb.api.models import Market, OrderBook
-from karb.config import get_settings
-from karb.utils.logging import get_logger
+from rarb.api.clob import ClobClient
+from rarb.api.gamma import GammaClient
+from rarb.api.models import Market, OrderBook
+from rarb.config import get_settings
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

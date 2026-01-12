@@ -7,8 +7,8 @@ from datetime import datetime, timezone
 from typing import Any, Optional
 from zoneinfo import ZoneInfo
 
-from karb.data.database import get_async_db, get_db
-from karb.utils.logging import get_logger
+from rarb.data.database import get_async_db, get_db
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

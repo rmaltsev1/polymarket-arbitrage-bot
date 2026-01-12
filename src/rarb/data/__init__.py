@@ -1,7 +1,7 @@
-"""Database module for karb."""
+"""Database module for rarb."""
 
-from karb.data.database import get_db, init_db
-from karb.data.repositories import (
+from rarb.data.database import get_db, init_db
+from rarb.data.repositories import (
     AlertRepository,
     ExecutionRepository,
     PortfolioRepository,

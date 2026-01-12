@@ -2,7 +2,7 @@
 """Debug the exact order body being sent."""
 
 import json
-from karb.config import get_settings
+from rarb.config import get_settings
 from py_clob_client.client import ClobClient
 from py_clob_client.clob_types import OrderArgs, ApiCreds
 from py_clob_client.utilities import order_to_json

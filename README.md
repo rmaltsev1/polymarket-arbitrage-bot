@@ -65,7 +65,7 @@ print(f'POLY_API_PASSPHRASE={creds.api_passphrase}')
 python scripts/approve_usdc.py
 
 # Run
-karb run --live --realtime
+rarb run --live --realtime
 ```
 
 ## Configuration
@@ -123,7 +123,7 @@ Configure the proxy in your `.env`:
 ```bash
 SOCKS5_PROXY_HOST=your-proxy-ip
 SOCKS5_PROXY_PORT=1080
-SOCKS5_PROXY_USER=karb
+SOCKS5_PROXY_USER=rarb
 SOCKS5_PROXY_PASS=your-password
 ```
 

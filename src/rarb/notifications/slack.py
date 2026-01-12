@@ -7,8 +7,8 @@ from typing import Optional
 
 import aiohttp
 
-from karb.config import get_settings
-from karb.utils.logging import get_logger
+from rarb.config import get_settings
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 
@@ -184,7 +184,7 @@ class SlackNotifier:
                 "type": "header",
                 "text": {
                     "type": "plain_text",
-                    "text": "Karb Bot Started",
+                    "text": "rarb Bot Started",
                     "emoji": True,
                 }
             },
@@ -205,11 +205,11 @@ class SlackNotifier:
             }
         ]
 
-        return await self.send(f"Karb bot started in {mode} mode", blocks=blocks)
+        return await self.send(f"rarb bot started in {mode} mode", blocks=blocks)
 
     async def notify_shutdown(self, reason: str = "normal") -> bool:
         """Send bot shutdown notification."""
-        return await self.send(f"Karb bot shutting down: {reason}")
+        return await self.send(f"rarb bot shutting down: {reason}")
 
     async def notify_daily_summary(
         self,

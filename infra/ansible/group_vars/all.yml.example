@@ -3,13 +3,13 @@
 # NEVER commit all.yml to git (it contains secrets)
 
 # Git repository
-karb_repo: "https://github.com/kmizzi/karb.git"
-karb_branch: "master"
+rarb_repo: "https://github.com/kmizzi/rarb.git"
+rarb_branch: "master"
 
 # Proxy configuration
-proxy_host: "karb-proxy.arkets.com"
+proxy_host: "rarb-proxy.arkets.com"
 proxy_port: 1080
-proxy_user: "karb"
+proxy_user: "rarb"
 proxy_pass: "K4rb_Pr0xy_2024!"
 
 # Wallet (KEEP SECRET!)

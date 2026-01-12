@@ -3,14 +3,14 @@
   systemd:
     daemon_reload: yes
 
-- name: Restart karb
+- name: Restart rarb
   systemd:
-    name: karb-bot
+    name: rarb-bot
     state: restarted
 
-- name: Restart karb-dashboard
+- name: Restart rarb-dashboard
   systemd:
-    name: karb-dashboard
+    name: rarb-dashboard
     state: restarted
 
 - name: Reload caddy

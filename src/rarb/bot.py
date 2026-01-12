@@ -6,13 +6,13 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Optional
 
-from karb.analyzer.arbitrage import ArbitrageAnalyzer
-from karb.api.models import ArbitrageOpportunity
-from karb.config import get_settings
-from karb.executor.executor import ExecutionResult, ExecutionStatus, OrderExecutor
-from karb.notifications.slack import get_notifier
-from karb.scanner.market_scanner import MarketScanner, MarketSnapshot
-from karb.utils.logging import get_logger, setup_logging
+from rarb.analyzer.arbitrage import ArbitrageAnalyzer
+from rarb.api.models import ArbitrageOpportunity
+from rarb.config import get_settings
+from rarb.executor.executor import ExecutionResult, ExecutionStatus, OrderExecutor
+from rarb.notifications.slack import get_notifier
+from rarb.scanner.market_scanner import MarketScanner, MarketSnapshot
+from rarb.utils.logging import get_logger, setup_logging
 
 log = get_logger(__name__)
 
@@ -243,7 +243,7 @@ class RealtimeArbitrageBot:
     BALANCE_REFRESH_INTERVAL = 60  # 1 minute
 
     def __init__(self) -> None:
-        from karb.scanner.realtime_scanner import RealtimeScanner
+        from rarb.scanner.realtime_scanner import RealtimeScanner
 
         settings = get_settings()
 
@@ -276,7 +276,7 @@ class RealtimeArbitrageBot:
 
         This eliminates the ~500ms neg_risk API call during order execution.
         """
-        from karb.api.models import Market
+        from rarb.api.models import Market
 
         # Extract all token IDs
         token_ids = []
@@ -300,7 +300,7 @@ class RealtimeArbitrageBot:
     async def _save_near_miss_alert(self, alert, min_required: Decimal) -> None:
         """Save an illiquid arbitrage alert to the database."""
         from datetime import datetime, timezone
-        from karb.data.repositories import NearMissAlertRepository
+        from rarb.data.repositories import NearMissAlertRepository
 
         try:
             await NearMissAlertRepository.insert(
@@ -321,7 +321,7 @@ class RealtimeArbitrageBot:
     async def _save_insufficient_balance_alert(self, alert, required: Decimal, available: Decimal) -> None:
         """Save an alert for when balance is insufficient."""
         from datetime import datetime, timezone
-        from karb.data.repositories import NearMissAlertRepository
+        from rarb.data.repositories import NearMissAlertRepository
 
         try:
             await NearMissAlertRepository.insert(
@@ -341,8 +341,8 @@ class RealtimeArbitrageBot:
 
     async def _on_arbitrage(self, alert) -> None:
         """Handle arbitrage alert from scanner."""
-        from karb.api.models import ArbitrageOpportunity
-        from karb.scanner.realtime_scanner import ArbitrageAlert
+        from rarb.api.models import ArbitrageOpportunity
+        from rarb.scanner.realtime_scanner import ArbitrageAlert
 
         alert: ArbitrageAlert = alert
         settings = get_settings()
@@ -480,7 +480,7 @@ class RealtimeArbitrageBot:
 
     async def _auto_redemption_loop(self) -> None:
         """Background task that periodically checks for and redeems resolved positions."""
-        from karb.executor.redemption import check_and_redeem
+        from rarb.executor.redemption import check_and_redeem
 
         settings = get_settings()
 
@@ -524,7 +524,7 @@ class RealtimeArbitrageBot:
     async def _stats_history_loop(self) -> None:
         """Background task that records hourly stats snapshots for charting."""
         from datetime import datetime, timezone
-        from karb.data.repositories import StatsHistoryRepository
+        from rarb.data.repositories import StatsHistoryRepository
 
         # Wait a bit before first record
         await asyncio.sleep(60)
@@ -573,7 +573,7 @@ class RealtimeArbitrageBot:
     async def _minute_stats_loop(self) -> None:
         """Background task that records minute-level price update stats."""
         from datetime import datetime, timezone
-        from karb.data.repositories import MinuteStatsRepository
+        from rarb.data.repositories import MinuteStatsRepository
 
         # Wait a bit before first record
         await asyncio.sleep(10)
@@ -614,7 +614,7 @@ class RealtimeArbitrageBot:
 
     async def _refresh_balance(self) -> Decimal:
         """Fetch current USDC balance from chain and update cache."""
-        from karb.tracking.portfolio import PortfolioTracker, BalanceSnapshot
+        from rarb.tracking.portfolio import PortfolioTracker, BalanceSnapshot
 
         try:
             tracker = PortfolioTracker()

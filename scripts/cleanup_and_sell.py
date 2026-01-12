@@ -2,7 +2,7 @@
 """Cancel all orders and sell position using py_clob_client."""
 
 import httpx
-from karb.config import get_settings
+from rarb.config import get_settings
 from py_clob_client.client import ClobClient
 from py_clob_client.clob_types import OrderArgs, ApiCreds
 

@@ -3,8 +3,8 @@
 
 import json
 import asyncio
-from karb.executor.async_clob import create_async_clob_client, SignedOrder
-from karb.config import get_settings
+from rarb.executor.async_clob import create_async_clob_client, SignedOrder
+from rarb.config import get_settings
 from py_clob_client.client import ClobClient
 from py_clob_client.clob_types import OrderArgs, ApiCreds
 

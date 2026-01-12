@@ -1,4 +1,4 @@
-"""Configuration management for karb."""
+"""Configuration management for rarb."""
 
 from pathlib import Path
 from typing import Optional

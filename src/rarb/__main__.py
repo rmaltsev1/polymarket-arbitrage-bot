@@ -1,6 +1,6 @@
-"""Allow running with python -m karb."""
+"""Allow running with python -m rarb."""
 
-from karb.cli import main
+from rarb.cli import main
 
 if __name__ == "__main__":
     main()

@@ -1,1 +1,1 @@
-"""Tests for karb."""
+"""Tests for rarb."""

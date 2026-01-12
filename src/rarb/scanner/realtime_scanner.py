@@ -6,18 +6,18 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Awaitable, Callable, Optional
 
-from karb.api.gamma import GammaClient
-from karb.api.models import Market
-from karb.api.websocket import (
+from rarb.api.gamma import GammaClient
+from rarb.api.models import Market
+from rarb.api.websocket import (
     OrderBookUpdate,
     PriceChange,
     WebSocketClient,
 )
-from karb.config import get_settings
-from karb.data.database import init_async_db
-from karb.data.repositories import AlertRepository, StatsRepository
-from karb.notifications.slack import get_notifier
-from karb.utils.logging import get_logger
+from rarb.config import get_settings
+from rarb.data.database import init_async_db
+from rarb.data.repositories import AlertRepository, StatsRepository
+from rarb.notifications.slack import get_notifier
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

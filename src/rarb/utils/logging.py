@@ -1,4 +1,4 @@
-"""Logging configuration for karb."""
+"""Logging configuration for rarb."""
 
 import logging
 import sys

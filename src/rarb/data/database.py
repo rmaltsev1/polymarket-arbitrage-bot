@@ -1,4 +1,4 @@
-"""SQLite database management for karb with async support.
+"""SQLite database management for rarb with async support.
 
 Uses aiosqlite for non-blocking database operations to avoid
 interfering with critical trading execution.
@@ -12,12 +12,12 @@ from typing import AsyncGenerator, Generator, Optional
 
 import aiosqlite
 
-from karb.utils.logging import get_logger
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 
 # Default database path
-DEFAULT_DB_PATH = Path.home() / ".karb" / "karb.db"
+DEFAULT_DB_PATH = Path.home() / ".rarb" / "rarb.db"
 
 # Global database path (can be overridden for testing)
 _db_path: Optional[Path] = None

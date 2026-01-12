@@ -1,5 +1,5 @@
-"""Web dashboard for karb monitoring."""
+"""Web dashboard for rarb monitoring."""
 
-from karb.dashboard.app import create_app, run_dashboard
+from rarb.dashboard.app import create_app, run_dashboard
 
 __all__ = ["create_app", "run_dashboard"]

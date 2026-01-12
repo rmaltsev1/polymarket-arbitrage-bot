@@ -1,5 +1,5 @@
 ---
-# Bot server setup - Karb arbitrage bot
+# Bot server setup - rarb arbitrage bot
 
 - name: Update apt cache
   apt:
@@ -18,119 +18,119 @@
       - libssl-dev
     state: present
 
-- name: Create karb user
+- name: Create rarb user
   user:
-    name: karb
+    name: rarb
     shell: /bin/bash
-    home: /home/karb
+    home: /home/rarb
     create_home: yes
     system: no
 
 - name: Create app directory
   file:
-    path: /opt/karb
+    path: /opt/rarb
     state: directory
-    owner: karb
-    group: karb
+    owner: rarb
+    group: rarb
     mode: '0755'
 
 - name: Create data directory
   file:
-    path: /home/karb/.karb
+    path: /home/rarb/.rarb
     state: directory
-    owner: karb
-    group: karb
+    owner: rarb
+    group: rarb
     mode: '0755'
 
-- name: Add /opt/karb to git safe directories
-  command: git config --global --add safe.directory /opt/karb
+- name: Add /opt/rarb to git safe directories
+  command: git config --global --add safe.directory /opt/rarb
   changed_when: false
 
 - name: Check if repo already cloned
   stat:
-    path: /opt/karb/.git
+    path: /opt/rarb/.git
   register: git_exists
 
-- name: Clone karb repository
-  command: git clone {{ karb_repo }} /opt/karb
+- name: Clone rarb repository
+  command: git clone {{ rarb_repo }} /opt/rarb
   when: not git_exists.stat.exists
 
-- name: Update karb repository
-  command: git pull origin {{ karb_branch }}
+- name: Update rarb repository
+  command: git pull origin {{ rarb_branch }}
   args:
-    chdir: /opt/karb
+    chdir: /opt/rarb
   when: git_exists.stat.exists
   register: git_pull
   changed_when: "'Already up to date' not in git_pull.stdout"
-  notify: Restart karb
+  notify: Restart rarb
 
-- name: Set ownership of karb directory
+- name: Set ownership of rarb directory
   file:
-    path: /opt/karb
+    path: /opt/rarb
     state: directory
-    owner: karb
-    group: karb
+    owner: rarb
+    group: rarb
     recurse: yes
 
 - name: Create Python virtual environment
-  command: python3 -m venv /opt/karb/venv
+  command: python3 -m venv /opt/rarb/venv
   args:
-    creates: /opt/karb/venv
+    creates: /opt/rarb/venv
 
 - name: Set ownership of venv
   file:
-    path: /opt/karb/venv
+    path: /opt/rarb/venv
     state: directory
-    owner: karb
-    group: karb
+    owner: rarb
+    group: rarb
     recurse: yes
 
-- name: Install karb package
+- name: Install rarb package
   pip:
-    name: /opt/karb
+    name: /opt/rarb
     editable: yes
-    virtualenv: /opt/karb/venv
-  notify: Restart karb
+    virtualenv: /opt/rarb/venv
+  notify: Restart rarb
 
 - name: Create .env file from template
   template:
     src: env.j2
-    dest: /opt/karb/.env
-    owner: karb
-    group: karb
+    dest: /opt/rarb/.env
+    owner: rarb
+    group: rarb
     mode: '0600'
-  notify: Restart karb
+  notify: Restart rarb
 
-- name: Create systemd service for karb bot
+- name: Create systemd service for rarb bot
   template:
-    src: karb-bot.service.j2
-    dest: /etc/systemd/system/karb-bot.service
+    src: rarb-bot.service.j2
+    dest: /etc/systemd/system/rarb-bot.service
     owner: root
     group: root
     mode: '0644'
   notify:
     - Reload systemd
-    - Restart karb
+    - Restart rarb
 
-- name: Create systemd service for karb dashboard
+- name: Create systemd service for rarb dashboard
   template:
-    src: karb-dashboard.service.j2
-    dest: /etc/systemd/system/karb-dashboard.service
+    src: rarb-dashboard.service.j2
+    dest: /etc/systemd/system/rarb-dashboard.service
     owner: root
     group: root
     mode: '0644'
   notify:
     - Reload systemd
-    - Restart karb-dashboard
+    - Restart rarb-dashboard
 
-- name: Enable and start karb services
+- name: Enable and start rarb services
   systemd:
     name: "{{ item }}"
     enabled: yes
     state: started
   loop:
-    - karb-bot
-    - karb-dashboard
+    - rarb-bot
+    - rarb-dashboard
 
 # Caddy for HTTPS reverse proxy
 - name: Install Caddy prerequisites

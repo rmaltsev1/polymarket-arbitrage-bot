@@ -5,9 +5,9 @@ from typing import Any, Optional
 
 import aiohttp
 
-from karb.api.models import OrderBook, OrderBookLevel
-from karb.config import get_settings
-from karb.utils.logging import get_logger
+from rarb.api.models import OrderBook, OrderBookLevel
+from rarb.config import get_settings
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

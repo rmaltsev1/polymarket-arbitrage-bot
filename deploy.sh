@@ -1,21 +1,21 @@
 #!/bin/bash
-# Karb deployment script for fresh Ubuntu VPS
+# rarb deployment script for fresh Ubuntu VPS
 # Usage: ssh root@NEW_IP 'bash -s' < deploy.sh
 
 set -e
 
-echo "=== Karb Deployment Script ==="
+echo "=== rarb Deployment Script ==="
 
 # Install dependencies
 apt update && apt install -y python3.11 python3.11-venv python3-pip git
 
 # Clone repo
 cd /opt
-if [ -d "karb" ]; then
-    cd karb && git pull origin master
+if [ -d "rarb" ]; then
+    cd rarb && git pull origin master
 else
-    git clone https://github.com/kmizzi/karb.git
-    cd karb
+    git clone https://github.com/kmizzi/rarb.git
+    cd rarb
 fi
 
 # Create venv and install
@@ -61,22 +61,22 @@ CLOB_BASE_URL=https://clob.polymarket.com
 GAMMA_BASE_URL=https://gamma-api.polymarket.com
 EOF
     echo ""
-    echo ">>> IMPORTANT: Edit /opt/karb/.env with your credentials <<<"
+    echo ">>> IMPORTANT: Edit /opt/rarb/.env with your credentials <<<"
     echo ""
 fi
 
 # Create systemd service
-cat > /etc/systemd/system/karb.service << 'EOF'
+cat > /etc/systemd/system/rarb.service << 'EOF'
 [Unit]
-Description=Karb Arbitrage Bot
+Description=rarb Arbitrage Bot
 After=network.target
 
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/opt/karb
-Environment=PATH=/opt/karb/.venv/bin
-ExecStart=/opt/karb/.venv/bin/karb run --realtime
+WorkingDirectory=/opt/rarb
+Environment=PATH=/opt/rarb/.venv/bin
+ExecStart=/opt/rarb/.venv/bin/rarb run --realtime
 Restart=always
 RestartSec=10
 
@@ -84,17 +84,17 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-cat > /etc/systemd/system/karb-dashboard.service << 'EOF'
+cat > /etc/systemd/system/rarb-dashboard.service << 'EOF'
 [Unit]
-Description=Karb Dashboard
+Description=rarb Dashboard
 After=network.target
 
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/opt/karb
-Environment=PATH=/opt/karb/.venv/bin
-ExecStart=/opt/karb/.venv/bin/karb dashboard
+WorkingDirectory=/opt/rarb
+Environment=PATH=/opt/rarb/.venv/bin
+ExecStart=/opt/rarb/.venv/bin/rarb dashboard
 Restart=always
 RestartSec=10
 
@@ -103,16 +103,16 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl enable karb
-systemctl enable karb-dashboard
+systemctl enable rarb
+systemctl enable rarb-dashboard
 
 echo ""
 echo "=== Deployment Complete ==="
 echo ""
 echo "Next steps:"
-echo "  1. Edit credentials: nano /opt/karb/.env"
-echo "  2. Start the bot: systemctl start karb"
-echo "  3. Start dashboard: systemctl start karb-dashboard"
-echo "  4. Check bot logs: journalctl -u karb -f"
+echo "  1. Edit credentials: nano /opt/rarb/.env"
+echo "  2. Start the bot: systemctl start rarb"
+echo "  3. Start dashboard: systemctl start rarb-dashboard"
+echo "  4. Check bot logs: journalctl -u rarb -f"
 echo "  5. Access dashboard: http://YOUR_IP:8080"
 echo ""

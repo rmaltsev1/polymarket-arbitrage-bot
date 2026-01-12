@@ -5,12 +5,12 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Callable, Optional
 
-from karb.api.gamma import GammaClient
-from karb.api.kalshi import KalshiClient, KalshiMarket
-from karb.api.models import Market as PolyMarket
-from karb.config import get_settings
-from karb.matcher.event_matcher import EventMatcher, MatchedEvent
-from karb.utils.logging import get_logger
+from rarb.api.gamma import GammaClient
+from rarb.api.kalshi import KalshiClient, KalshiMarket
+from rarb.api.models import Market as PolyMarket
+from rarb.config import get_settings
+from rarb.matcher.event_matcher import EventMatcher, MatchedEvent
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

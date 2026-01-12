@@ -5,8 +5,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Any, Optional
 
-from karb.data.repositories import TradeRepository
-from karb.utils.logging import get_logger
+from rarb.data.repositories import TradeRepository
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 

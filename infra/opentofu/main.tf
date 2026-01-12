@@ -1,4 +1,4 @@
-# Karb Infrastructure - AWS EC2 instances
+# rarb Infrastructure - AWS EC2 instances
 # - us-east-1: Main bot (scanner + executor)
 # - ca-central-1: SOCKS5 proxy for order placement
 
@@ -42,8 +42,8 @@ resource "aws_vpc" "bot_vpc" {
   enable_dns_support   = true
 
   tags = {
-    Name    = "karb-vpc"
-    Project = "karb"
+    Name    = "rarb-vpc"
+    Project = "rarb"
   }
 }
 
@@ -53,8 +53,8 @@ resource "aws_internet_gateway" "bot_igw" {
   vpc_id   = aws_vpc.bot_vpc.id
 
   tags = {
-    Name    = "karb-igw"
-    Project = "karb"
+    Name    = "rarb-igw"
+    Project = "rarb"
   }
 }
 
@@ -67,8 +67,8 @@ resource "aws_subnet" "bot_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name    = "karb-subnet"
-    Project = "karb"
+    Name    = "rarb-subnet"
+    Project = "rarb"
   }
 }
 
@@ -83,8 +83,8 @@ resource "aws_route_table" "bot_rt" {
   }
 
   tags = {
-    Name    = "karb-rt"
-    Project = "karb"
+    Name    = "rarb-rt"
+    Project = "rarb"
   }
 }
 
@@ -98,22 +98,22 @@ resource "aws_route_table_association" "bot_rta" {
 # SSH Key Pair - us-east-1
 resource "aws_key_pair" "bot_key" {
   provider   = aws.us_east
-  key_name   = "karb-bot-key"
+  key_name   = "rarb-bot-key"
   public_key = var.ssh_public_key
 }
 
 # SSH Key Pair - ca-central-1
 resource "aws_key_pair" "proxy_key" {
   provider   = aws.ca_central
-  key_name   = "karb-proxy-key"
+  key_name   = "rarb-proxy-key"
   public_key = var.ssh_public_key
 }
 
 # Security Group for Bot Server (us-east-1)
 resource "aws_security_group" "bot_sg" {
   provider    = aws.us_east
-  name        = "karb-bot-sg"
-  description = "Security group for Karb bot server"
+  name        = "rarb-bot-sg"
+  description = "Security group for rarb bot server"
   vpc_id      = aws_vpc.bot_vpc.id
 
   # SSH access
@@ -152,16 +152,16 @@ resource "aws_security_group" "bot_sg" {
   }
 
   tags = {
-    Name    = "karb-bot-sg"
-    Project = "karb"
+    Name    = "rarb-bot-sg"
+    Project = "rarb"
   }
 }
 
 # Security Group for Proxy Server (ca-central-1)
 resource "aws_security_group" "proxy_sg" {
   provider    = aws.ca_central
-  name        = "karb-proxy-sg"
-  description = "Security group for Karb SOCKS5 proxy"
+  name        = "rarb-proxy-sg"
+  description = "Security group for rarb SOCKS5 proxy"
 
   # SSH access
   ingress {
@@ -190,8 +190,8 @@ resource "aws_security_group" "proxy_sg" {
   }
 
   tags = {
-    Name    = "karb-proxy-sg"
-    Project = "karb"
+    Name    = "rarb-proxy-sg"
+    Project = "rarb"
   }
 }
 
@@ -244,8 +244,8 @@ resource "aws_instance" "bot" {
   }
 
   tags = {
-    Name    = "karb-bot"
-    Project = "karb"
+    Name    = "rarb-bot"
+    Project = "rarb"
     Role    = "bot"
   }
 }
@@ -264,8 +264,8 @@ resource "aws_instance" "proxy" {
   }
 
   tags = {
-    Name    = "karb-proxy"
-    Project = "karb"
+    Name    = "rarb-proxy"
+    Project = "rarb"
     Role    = "proxy"
   }
 }
@@ -285,33 +285,33 @@ resource "aws_security_group_rule" "proxy_from_bot" {
   depends_on = [aws_instance.bot]
 }
 
-# Cloudflare DNS - point karb.arkets.com to bot server
+# Cloudflare DNS - point rarb.arkets.com to bot server
 data "cloudflare_zone" "arkets" {
   name = "arkets.com"
 }
 
-resource "cloudflare_record" "karb" {
+resource "cloudflare_record" "rarb" {
   zone_id = data.cloudflare_zone.arkets.id
-  name    = "karb"
+  name    = "rarb"
   content = aws_instance.bot.public_ip
   type    = "A"
   ttl     = 60  # Low TTL for easy updates
   proxied = false  # Direct connection, no Cloudflare proxy (for WebSocket compatibility)
 }
 
-resource "cloudflare_record" "karb_www" {
+resource "cloudflare_record" "rarb_www" {
   zone_id = data.cloudflare_zone.arkets.id
-  name    = "www.karb"
-  content = "karb.arkets.com"
+  name    = "www.rarb"
+  content = "rarb.arkets.com"
   type    = "CNAME"
   ttl     = 300
   proxied = false
 }
 
-# Cloudflare DNS - point karb-proxy.arkets.com to proxy server (Montreal)
-resource "cloudflare_record" "karb_proxy" {
+# Cloudflare DNS - point rarb-proxy.arkets.com to proxy server (Montreal)
+resource "cloudflare_record" "rarb_proxy" {
   zone_id = data.cloudflare_zone.arkets.id
-  name    = "karb-proxy"
+  name    = "rarb-proxy"
   content = aws_instance.proxy.public_ip
   type    = "A"
   ttl     = 60

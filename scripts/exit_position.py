@@ -2,7 +2,7 @@
 """Exit test position by selling tokens."""
 
 import asyncio
-from karb.executor.async_clob import create_async_clob_client
+from rarb.executor.async_clob import create_async_clob_client
 
 # The token we bought during testing
 TOKEN_ID = "104173557214744537570424345347209544585775842950109756851652855913015295701992"

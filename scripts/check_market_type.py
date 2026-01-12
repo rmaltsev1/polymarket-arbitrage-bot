@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check if market uses neg_risk."""
 
-from karb.config import get_settings
+from rarb.config import get_settings
 from py_clob_client.client import ClobClient
 from py_clob_client.clob_types import ApiCreds
 

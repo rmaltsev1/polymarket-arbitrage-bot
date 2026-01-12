@@ -11,9 +11,9 @@ from datetime import datetime, timezone
 
 import httpx
 
-from karb.config import get_settings
-from karb.data.database import init_db, get_db
-from karb.utils.logging import setup_logging, get_logger
+from rarb.config import get_settings
+from rarb.data.database import init_db, get_db
+from rarb.utils.logging import setup_logging, get_logger
 
 log = get_logger(__name__)
 

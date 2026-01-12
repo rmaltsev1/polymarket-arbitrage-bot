@@ -10,9 +10,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.templating import Jinja2Templates
 
-from karb.config import get_settings
-from karb.data.database import init_async_db
-from karb.data.repositories import (
+from rarb.config import get_settings
+from rarb.data.database import init_async_db
+from rarb.data.repositories import (
     AlertRepository,
     ClosedPositionRepository,
     ExecutionRepository,
@@ -22,9 +22,9 @@ from karb.data.repositories import (
     StatsRepository,
     TradeRepository,
 )
-from karb.executor.async_clob import create_async_clob_client
-from karb.tracking.portfolio import PortfolioTracker
-from karb.utils.logging import get_logger
+from rarb.executor.async_clob import create_async_clob_client
+from rarb.tracking.portfolio import PortfolioTracker
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 
@@ -75,7 +75,7 @@ def verify_credentials(
 def create_app() -> FastAPI:
     """Create the FastAPI dashboard application."""
     app = FastAPI(
-        title="Karb Dashboard",
+        title="rarb Dashboard",
         description="Polymarket Arbitrage Bot Dashboard",
         version="1.0.0",
     )
@@ -339,7 +339,7 @@ def create_app() -> FastAPI:
         username: str = Depends(verify_credentials),
     ):
         """Get near-miss (illiquid) arbitrage alerts from database with pagination."""
-        from karb.data.repositories import NearMissAlertRepository
+        from rarb.data.repositories import NearMissAlertRepository
 
         alerts = await NearMissAlertRepository.get_recent(limit=limit, offset=offset)
         total = await NearMissAlertRepository.get_total_count()
@@ -368,7 +368,7 @@ def create_app() -> FastAPI:
     @app.get("/api/redeemable")
     async def get_redeemable(username: str = Depends(verify_credentials)):
         """Get positions that can be redeemed."""
-        from karb.executor.redemption import get_redeemable_positions
+        from rarb.executor.redemption import get_redeemable_positions
 
         settings = get_settings()
         if not settings.wallet_address:
@@ -399,7 +399,7 @@ def create_app() -> FastAPI:
     @app.post("/api/redeem")
     async def redeem_positions(username: str = Depends(verify_credentials)):
         """Trigger redemption of all redeemable positions."""
-        from karb.executor.redemption import redeem_all_positions
+        from rarb.executor.redemption import redeem_all_positions
 
         settings = get_settings()
         if settings.dry_run:
@@ -548,7 +548,7 @@ def create_app() -> FastAPI:
         username: str = Depends(verify_credentials),
     ):
         """Get daily near-miss alert counts for charting."""
-        from karb.data.repositories import NearMissAlertRepository
+        from rarb.data.repositories import NearMissAlertRepository
 
         data = await NearMissAlertRepository.get_daily_counts(days=days)
         return {

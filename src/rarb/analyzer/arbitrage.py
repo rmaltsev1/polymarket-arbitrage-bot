@@ -5,10 +5,10 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Optional
 
-from karb.api.models import ArbitrageOpportunity
-from karb.config import get_settings
-from karb.scanner.market_scanner import MarketSnapshot
-from karb.utils.logging import get_logger
+from rarb.api.models import ArbitrageOpportunity
+from rarb.config import get_settings
+from rarb.scanner.market_scanner import MarketSnapshot
+from rarb.utils.logging import get_logger
 
 log = get_logger(__name__)
 
