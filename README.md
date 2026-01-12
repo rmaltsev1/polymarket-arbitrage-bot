@@ -1,8 +1,16 @@
-# karb
+# Polymarket Arbitrage Bot - Arbitrage Opportunities on Prediction Markets
 
 Polymarket arbitrage bot - automated detection and execution of risk-free arbitrage opportunities on prediction markets.
 
+Status: Live trading enabled. Dashboard available at configured domain.
+
+Read article here: https://runesats.medium.com/high-roi-polymarket-arbitrage-in-2026-programmatic-dutch-book-strategies-bots-and-portfolio-5dbaf708f5a2
+
 ## Strategy
+
+Strategy is Not for sale but going to share it to customers.
+
+📞 Support: https://t.me/runesats
 
 Pure arbitrage: when YES + NO token prices sum to less than $1.00, buy both. One token always pays out $1.00, guaranteeing profit regardless of outcome.
 
@@ -32,8 +40,8 @@ Live trading enabled. Dashboard available at configured domain.
 
 ```bash
 # Clone
-git clone https://github.com/kmizzi/karb.git
-cd karb
+git clone https://github.com/runesatsdev/polymarket-arbitrage-bot.git
+cd rarb
 
 # Install dependencies
 pip install -e .
