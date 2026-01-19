@@ -5,6 +5,10 @@ import os
 from py_clob_client.client import ClobClient
 from py_clob_client.clob_types import ApiCreds, OrderArgs
 
+from dotenv import load_dotenv
+# Load .env file
+load_dotenv()
+
 host = "https://clob.polymarket.com"
 chain_id = 137
 

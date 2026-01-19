@@ -255,8 +255,17 @@ class SlackNotifier:
 _notifier: Optional[SlackNotifier] = None
 
 
-def get_notifier() -> SlackNotifier:
-    """Get the global Slack notifier instance."""
+def get_notifier():
+    """Get the global notifier instance (Telegram or Slack)."""
+    from rarb.notifications.telegram import get_telegram_notifier
+    
+    settings = get_settings()
+    
+    # Prefer Telegram if configured
+    if settings.telegram_bot_token and settings.telegram_chat_id:
+        return get_telegram_notifier()
+    
+    # Fall back to Slack
     global _notifier
     if _notifier is None:
         _notifier = SlackNotifier()
